@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
   Table,
   TableBody,
@@ -16,68 +16,70 @@ import {
   TablePagination,
   Tooltip,
   Box,
-} from '@mui/material';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import SearchIcon from '@mui/icons-material/Search';
+} from '@mui/material'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import SearchIcon from '@mui/icons-material/Search'
 
 function ViewTickets() {
-  const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [bookings, setBookings] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   useEffect(() => {
-    viewTickets();
-  }, []);
+    viewTickets()
+  }, [])
 
   function viewTickets() {
-    setLoading(true);
+    setLoading(true)
     axios
       .get('http://localhost:3001/api/bookings')
       .then((response) => {
-        setBookings(response.data);
-        setLoading(false);
+        setBookings(response.data)
+        setLoading(false)
       })
       .catch((error) => {
-        setError('Failed to fetch bookings. Please try again later.');
-        setLoading(false);
-      });
+        setError('Failed to fetch bookings. Please try again later.')
+        setLoading(false)
+      })
   }
 
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
+    setSearchQuery(event.target.value)
+  }
 
   const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   const filteredBookings = bookings.filter((booking) => {
-    const customerName = booking.customerName ? booking.customerName.toLowerCase() : ''; 
-    const bookingId = booking.id ? booking.id.toString() : ''; 
-    
+    const customerName = booking.customerName
+      ? booking.customerName.toLowerCase()
+      : ''
+    const bookingId = booking.id ? booking.id.toString() : ''
+
     return (
       customerName.includes(searchQuery.toLowerCase()) ||
       bookingId.includes(searchQuery)
-    );
-  });
-
+    )
+  })
+  console.log('filteredBookings', filteredBookings)
   return (
-    <Box 
+    <Box
       sx={{
-        display: 'flex', 
-        flexDirection: 'column', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh', 
-        padding: 2
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        padding: 2,
       }}
     >
       <Typography variant="h4" gutterBottom>
@@ -89,7 +91,13 @@ function ViewTickets() {
         </Tooltip>
       </Typography>
 
-      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          marginBottom: '20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <TextField
           variant="outlined"
           label="Search by Name or ID"
@@ -107,7 +115,10 @@ function ViewTickets() {
         <Alert severity="error">{error}</Alert>
       ) : (
         <>
-          <TableContainer component={Paper} style={{ maxWidth: '80%', margin: '0 auto' }}>
+          <TableContainer
+            component={Paper}
+            style={{ maxWidth: '80%', margin: '0 auto' }}
+          >
             <Table>
               <TableHead>
                 <TableRow>
@@ -123,10 +134,10 @@ function ViewTickets() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((booking) => (
                       <TableRow key={booking.id} hover>
-                        <TableCell>{booking.id}</TableCell>
-                        <TableCell>{booking.customerName}</TableCell>
-                        <TableCell>{booking.customerNumber}</TableCell>
-                        <TableCell>{booking.numberOfTickets}</TableCell>
+                        <TableCell>{booking.ticket_id}</TableCell>
+                        <TableCell>{booking.customer_name}</TableCell>
+                        <TableCell>{booking.customer_mobileNo}</TableCell>
+                        <TableCell>{booking.number_of_tickets}</TableCell>
                       </TableRow>
                     ))
                 ) : (
@@ -151,7 +162,7 @@ function ViewTickets() {
         </>
       )}
     </Box>
-  );
+  )
 }
 
-export default ViewTickets;
+export default ViewTickets

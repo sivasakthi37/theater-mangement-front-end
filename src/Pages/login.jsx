@@ -25,14 +25,18 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault() // Prevent the default form submission behavior
-
+    console.log(
+      customerDetails.email,
+      adminData.email,
+      customerDetails.password,
+      adminData.passWord,
+    )
     try {
-      const response = await axios.post('http://localhost:3001/api/login', {
-        email: customerDetails.email, // Assuming "customerName" is the email
-        password: customerDetails.password,
-      })
-
-      if (response.status === 200) {
+      if (
+        customerDetails.email === adminData.email &&
+        customerDetails.password === adminData.passWord
+      ) {
+        localStorage.setItem('isAdmin', true)
         setSubmitStatus({
           message: 'Login successful!',
           severity: 'success',
@@ -40,6 +44,21 @@ function Login() {
         setTimeout(() => {
           navigate('/home')
         }, 1000)
+      } else {
+        const response = await axios.post('http://localhost:3001/api/login', {
+          email: customerDetails.email, // Assuming "customerName" is the email
+          password: customerDetails.password,
+        })
+        if (response.status === 200) {
+          localStorage.setItem('isAdmin', false)
+          setSubmitStatus({
+            message: 'Login successful!',
+            severity: 'success',
+          })
+          setTimeout(() => {
+            navigate('/home')
+          }, 1000)
+        }
       }
     } catch (error) {
       setSubmitStatus({

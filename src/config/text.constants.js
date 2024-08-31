@@ -1,4 +1,4 @@
 export const adminDetails = {
-  userName: "surendar",
-  passWord: "123",
+  email: "admin@gmail.com",
+  passWord: "123456",
 };
