@@ -53,7 +53,7 @@ function Login() {
   return (
     <div className="login">
       <div className="main">
-        <h1 className="authFormH1">GeeksforGeeks</h1>
+        <h1 className="authFormH1">LOGIN</h1>
         <h3>Enter your login credentials</h3>
         <form action="">
           <label className="authFormLabel" htmlFor="first">

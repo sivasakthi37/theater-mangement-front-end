@@ -9,7 +9,8 @@ import SideNavigation from "./Pages/sideNav.jsx";
 import ViewTickets from "./Pages/viewTickets.jsx";
 import CancelTickets from "./Pages/cancelTickets.jsx";
 import About from "./Pages/About.jsx";
-import ContactUs from "./Pages/About.jsx";
+import ContactUs from "./Pages/ContactUs.jsx";
+import offer from "./Pages/offer.js";
 function App() {
   return (
     <div className="App">
@@ -24,6 +25,7 @@ function App() {
           <Route path="/cancelTickets" Component={CancelTickets} />
           <Route path="/ContactUs" Component={ContactUs} />
           <Route path="/About" Component={About} />
+          <Route path="/offer" Component={offer} />
 
         </Routes>
       </Router>

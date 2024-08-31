@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Divider,
   Drawer,
@@ -6,26 +7,22 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
+
+  IconButton,
+  Box,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Home, MenuBook, Visibile, Cancel, MoreVert, Visibility } from "@mui/icons-material";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import ViewTickets from "./viewTickets";
 
 export default function SideNavigation() {
   const location = useLocation();
-  const paths = [
-    "/",
-    "/home",
-    "/bookTickets",
-    "/viewTickets",
-    "/cancelTickets",
-    
-  ];
   const navigate = useNavigate();
+  const paths = ["/", "/home","/viewTickets", "/bookTickets",  "/cancelTickets"];
+
   const [sideNav, setSideNav] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     if (paths.includes(location.pathname) && location.pathname !== "/") {
       setSideNav(true);
@@ -33,37 +30,59 @@ export default function SideNavigation() {
       setSideNav(false);
     }
   }, [paths, location.pathname]);
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   const navigation = [
-    { path: "/home", name: "Home" },
-    { path: "/bookTickets", name: "Book Tickets" },
-    { path: "/viewTickets", name: "View Tickets" },
-    { path: "/cancelTickets", name: "Cancel Tickets" },
+    { path: "/home",  icon: <Home /> },
+    { path: "/bookTickets", icon: <MenuBook /> },
+    { path: "/viewTickets", icon: <Visibility/> },
+    { path: "/cancelTickets", icon: <Cancel /> },
   ];
+
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
-      <List style={{backgroundColor:'pink'}}>
-        {navigation.map((text, index) => (
-          <ListItem key={text.name} disablePadding>
-            <ListItemButton component={Link} to={text.path}>
-              <ListItemText primary={text.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <Box display="flex" flexDirection="column" sx={{ height: "100%" }}>
+        {/* Adjusted to remove extra space */}
+        <IconButton
+          onClick={handleMenuToggle}
+          sx={{
+           
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          <MoreVert />
+        </IconButton>
+        <Divider />
+        <List style={{  paddingTop: 0 }}>
+          {/* Conditionally render icons based on menuOpen state */}
+          {menuOpen && navigation.map((item) => (
+            <ListItem key={item.name} disablePadding>
+              <ListItemButton component={Link} to={item.path}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </div>
   );
+
   return (
     <div>
       {sideNav && (
         <Drawer
           variant="permanent"
           sx={{
-            "& .MuiDrawer-paper": { boxSizing: "border-box", width: "180px" },
+            "& .MuiDrawer-paper": { boxSizing: "border-box", width: "40px" },
           }}
-          open
+
         >
+
           {drawer}
         </Drawer>
       )}

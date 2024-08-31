@@ -66,7 +66,7 @@ function RegisterPage() {
     <>
       <div className="login">
         <div className="main">
-          <h1 className="authFormH1">GeeksforGeeks</h1>
+          <h1 className="authFormH1">Register </h1>
           <h3>Enter your login credentials</h3>
           <label className="authFormLabel" htmlFor="first">
             Username:
