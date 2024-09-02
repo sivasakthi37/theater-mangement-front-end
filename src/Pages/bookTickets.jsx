@@ -51,6 +51,7 @@ function BookTickets() {
     try {
       console.log('count log')
       const response = await axios.post('http://localhost:3001/api/bookings', {
+        id: localStorage.getItem('userId'),
         customer_name: customerDetails.customerName,
         customer_mobileNo: customerDetails.customerNumber,
         number_of_tickets: customerDetails.numberOfTickets,
@@ -63,7 +64,7 @@ function BookTickets() {
         })
 
         setTimeout(() => {
-          navigate('/home')
+          navigate('/viewTickets')
         }, 3000)
       }
     } catch (error) {

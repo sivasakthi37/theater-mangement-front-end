@@ -34,8 +34,13 @@ function ViewTickets() {
 
   function viewTickets() {
     setLoading(true)
+    let url = 'http://localhost:3001/api/bookings'
+    let userId = localStorage.getItem('userId')
+    if (userId !== 'admin') {
+      url = `http://localhost:3001/api/bookings/${userId}`
+    }
     axios
-      .get('http://localhost:3001/api/bookings')
+      .get(url)
       .then((response) => {
         setBookings(response.data)
         setLoading(false)
@@ -82,6 +87,8 @@ function ViewTickets() {
         padding: 2,
       }}
     >
+      <h1>{localStorage.getItem('username')}</h1>
+      <h1>{localStorage.getItem('email')}</h1>
       <Typography variant="h4" gutterBottom>
         View Booked Tickets
         <Tooltip title="Refresh">

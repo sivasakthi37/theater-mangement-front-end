@@ -37,6 +37,9 @@ function Login() {
         customerDetails.password === adminData.passWord
       ) {
         localStorage.setItem('isAdmin', true)
+        localStorage.setItem('userId', 'admin')
+        localStorage.setItem('username', 'Admin')
+        localStorage.setItem('email', 'admin@gmail.com')
         setSubmitStatus({
           message: 'Login successful!',
           severity: 'success',
@@ -51,6 +54,9 @@ function Login() {
         })
         if (response.status === 200) {
           localStorage.setItem('isAdmin', false)
+          localStorage.setItem('userId', response.data.userId)
+          localStorage.setItem('username', response.data.username)
+          localStorage.setItem('email', response.data.email)
           setSubmitStatus({
             message: 'Login successful!',
             severity: 'success',

@@ -67,12 +67,6 @@ export default function SideNavigation() {
           {/* Conditionally render icons based on menuOpen state */}
           {menuOpen &&
             navigation.map((item, i) => {
-              if (
-                localStorage.getItem('isAdmin') === 'false' &&
-                item.path === '/viewTickets'
-              ) {
-                return <></>
-              }
               return (
                 <ListItem key={i} disablePadding>
                   <ListItemButton component={Link} to={item.path}>
